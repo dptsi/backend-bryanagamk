@@ -1,0 +1,23 @@
+POST http://localhost:3000/api/riwayat_cuti
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id_jenis_cuti": 1,
+  "lama": 3,
+  "keterangan": "Healing",
+  "no_telp": "08778777877",
+  "tgl_awal_cuti": "2023-05-19",
+  "tgl_akhir_cuti": "2023-05-21",
+  "lokasi": "Keputih"
+}
+
+###
+GET http://localhost:3000/api/riwayat_cuti/62
+Accept: application/json
+
+###
+GET http://localhost:3000/api/riwayat_cuti
+Accept: application/json
+
+###
