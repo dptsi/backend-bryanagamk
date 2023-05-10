@@ -1,0 +1,294 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MIWT RESTful API",
+    "description": "API Spec for MIWT RESTful API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
+  "paths": {
+    "/riwayat_cuti": {
+      "get": {
+        "security": [{
+          "CutiAuth" : []
+        }],
+        "tags": [
+          "Riwayat Cuti API"
+        ],
+        "description": "List all Cuti",
+        "summary": "List all Cuti",
+        "responses": {
+          "200": {
+            "description": "Success get all Cuti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Cuti"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [{
+          "CutiAuth" : []
+        }],
+        "tags": ["Riwayat Cuti API"],
+        "description": "Create new Cuti",
+        "summary": "Create new Cuti",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateCuti"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success Create Cuti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Cuti"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/riwayat_cuti/{cutiId}" : {
+      "get" : {
+        "security": [{
+          "CutiAuth" : []
+        }],
+        "tags": ["Riwayat Cuti API"],
+        "summary": "Get Cuti by Id",
+        "description": "Get Cuti by id",
+        "parameters": [
+          {
+            "name": "cutiId",
+            "in": "path",
+            "description": "Cuti Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success get Cuti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Cuti"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "security": [{
+          "CutiAuth" : []
+        }],
+        "tags": ["Riwayat Cuti API"],
+        "summary": "Update Cuti by Id",
+        "description": "Update Cuti by Id",
+        "parameters": [
+          {
+            "name": "cutiId",
+            "in": "path",
+            "description": "Cuti Id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateCuti"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200" : {
+            "description": "Success get Cuti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "data" : {
+                      "$ref": "#/components/schemas/Cuti"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [{
+          "CutiAuth" : []
+        }],
+        "tags": ["Riwayat Cuti API"],
+        "summary": "Delete Cuti by Id",
+        "description": "Delete Cuti by id",
+        "parameters": [
+          {
+            "name": "cutiId",
+            "in": "path",
+            "description": "Cuti Id"
+          }
+        ],
+        "responses": {
+          "200" : {
+            "description": "Success delete Cuti",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code" : {
+                      "type": "number"
+                    },
+                    "status" : {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "CutiAuth" : {
+        "type": "apiKey",
+        "in" : "header",
+        "name": "X-API-Key",
+        "description": "Authentication for Cuti API"
+      }
+    },
+    "schemas": {
+      "CreateOrUpdateCuti" : {
+        "type": "object",
+        "properties": {
+          "id_jenis_cuti": {
+            "type": "number"
+          },
+          "lama": {
+            "type": "number"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "no_telp": {
+            "type": "string"
+          },
+          "tgl_awal_cuti": {
+            "type": "string"
+          },
+          "tgl_akhir_cuti": {
+            "type": "string"
+          },
+          "lokasi": {
+            "type": "string"
+          }
+        }
+      },
+      "Cuti" : {
+        "type": "object",
+        "properties": {
+          "id_riwayat_cuti": {
+            "type": "string"
+          },
+          "id_sdm": {
+            "type": "string"
+          },
+          "id_jenis_cuti": {
+            "type": "number"
+          },
+          "is_valid": {
+            "type": "boolean"
+          },
+          "tgl_surat": {
+            "type": "string"
+          },
+          "lama": {
+            "type": "number"
+          },
+          "keterangan": {
+            "type": "string"
+          },
+          "no_telp": {
+            "type": "string"
+          },
+          "tgl_awal_cuti": {
+            "type": "string"
+          },
+          "tgl_akhir_cuti": {
+            "type": "string"
+          },
+          "lokasi": {
+            "type": "string"
+          },
+          "sisa_cuti_tahunan": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
