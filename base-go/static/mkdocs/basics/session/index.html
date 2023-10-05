@@ -1,0 +1,957 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://example.com/basics/session/">
+      
+      
+        <link rel="prev" href="../controllers/">
+      
+      
+        <link rel="next" href="../authentication/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
+    
+    
+      
+        <title>HTTP Session - Dokumentasi Base Go DPTSI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d451bc0e.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#http-session" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Dokumentasi Base Go DPTSI" class="md-header__button md-logo" aria-label="Dokumentasi Base Go DPTSI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Dokumentasi Base Go DPTSI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HTTP Session
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Dokumentasi Base Go DPTSI" class="md-nav__button md-logo" aria-label="Dokumentasi Base Go DPTSI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Dokumentasi Base Go DPTSI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Beranda
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Memulai
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Memulai
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../struktur-direktori/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struktur Direktori
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Dasar
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Dasar
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modul/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modul
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../routing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Routing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csrf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proteksi CSRF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    HTTP Session
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    HTTP Session
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pengenalan" class="md-nav__link">
+    Pengenalan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#konfigurasi" class="md-nav__link">
+    Konfigurasi
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prasyarat-adapter" class="md-nav__link">
+    Prasyarat Adapter
+  </a>
+  
+    <nav class="md-nav" aria-label="Prasyarat Adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firestore" class="md-nav__link">
+    Firestore
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gorm" class="md-nav__link">
+    GORM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interaksi-dengan-session" class="md-nav__link">
+    Interaksi Dengan Session
+  </a>
+  
+    <nav class="md-nav" aria-label="Interaksi Dengan Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mendapatkan-data" class="md-nav__link">
+    Mendapatkan data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#menyimpan-data" class="md-nav__link">
+    Menyimpan Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#menghapus-data" class="md-nav__link">
+    Menghapus Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regenerate-session-id" class="md-nav__link">
+    Regenerate Session ID
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#menambahkan-custom-session-adapter" class="md-nav__link">
+    Menambahkan Custom Session Adapter
+  </a>
+  
+    <nav class="md-nav" aria-label="Menambahkan Custom Session Adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mengimplementasikan-adapter" class="md-nav__link">
+    Mengimplementasikan Adapter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mendaftarkan-adapter" class="md-nav__link">
+    Mendaftarkan Adapter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openapi-docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dokumentasi OpenAPI 3.1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project-docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dokumentasi Project
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pengenalan" class="md-nav__link">
+    Pengenalan
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#konfigurasi" class="md-nav__link">
+    Konfigurasi
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prasyarat-adapter" class="md-nav__link">
+    Prasyarat Adapter
+  </a>
+  
+    <nav class="md-nav" aria-label="Prasyarat Adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#firestore" class="md-nav__link">
+    Firestore
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gorm" class="md-nav__link">
+    GORM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interaksi-dengan-session" class="md-nav__link">
+    Interaksi Dengan Session
+  </a>
+  
+    <nav class="md-nav" aria-label="Interaksi Dengan Session">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mendapatkan-data" class="md-nav__link">
+    Mendapatkan data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#menyimpan-data" class="md-nav__link">
+    Menyimpan Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#menghapus-data" class="md-nav__link">
+    Menghapus Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regenerate-session-id" class="md-nav__link">
+    Regenerate Session ID
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#menambahkan-custom-session-adapter" class="md-nav__link">
+    Menambahkan Custom Session Adapter
+  </a>
+  
+    <nav class="md-nav" aria-label="Menambahkan Custom Session Adapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mengimplementasikan-adapter" class="md-nav__link">
+    Mengimplementasikan Adapter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mendaftarkan-adapter" class="md-nav__link">
+    Mendaftarkan Adapter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="http-session">HTTP Session</h1>
+<h2 id="pengenalan">Pengenalan</h2>
+<p>Karena aplikasi berbasis HTTP tidak memiliki state, session menyediakan cara untuk menyimpan informasi tentang pengguna di beberapa request. Informasi pengguna tersebut biasanya ditempatkan di penyimpanan/backend persisten yang dapat diakses dari request berikutnya.</p>
+<h2 id="konfigurasi">Konfigurasi</h2>
+<p>Konfigurasi dari session aplikasi disimpan pada berkas <code>bootstrap/web/web.go</code>. Secara bawaan, base project ini dikonfigurasi menggunakan SQLite sebagai adapter dari session. Adapter tersebut menentukan dimana data dari session akan disimpan untuk setiap request. Berikut adalah adapter bawaan yang ada di dalam base project ini:</p>
+<ul>
+<li>Firestore - session disimpan di dalam database <a href="https://cloud.google.com/firestore">Firestore</a></li>
+<li>GORM - session disimpan di dalam database yang didukung oleh <a href="https://gorm.io/">GORM</a></li>
+</ul>
+<h2 id="prasyarat-adapter">Prasyarat Adapter</h2>
+<h3 id="firestore">Firestore</h3>
+<p>Dengan menggunakan adapter ini, maka Anda perlu mengkonfigurasi Firestore dengan mengisi nilai <code>SESSION_FIRESTORE_PROJECT_ID</code> pada <code>.env</code> dengan nilai yang sesuai dengan Project ID yang akan digunakan.</p>
+<h3 id="gorm">GORM</h3>
+<p>Buat koneksi ke database sesuai dengan <a href="https://gorm.io/docs/connecting_to_the_database.html">instruksi pada GORM</a> kemudian panggil fungsi <code>adapters.NewGorm()</code> dengan argumen koneksi database yang telah dibuat.</p>
+<h2 id="interaksi-dengan-session">Interaksi Dengan Session</h2>
+<p>Instance dari session dapat diambil melalui method <code>Default()</code> pada <code>its.ac.id/base-go/pkg/session</code> dengan memberi argumen berupa <code>*gin.Context</code>.</p>
+<pre><code class="language-go">package something
+
+import &quot;its.ac.id/base-go/pkg/session&quot;
+
+func Handler(ctx *gin.Context) {
+    // Mendapatkan instance dari session saat ini
+    sess := session.Default(ctx)
+
+}
+</code></pre>
+<h3 id="mendapatkan-data">Mendapatkan data</h3>
+<p>Data dari session dapat diperoleh dari method <code>Get()</code> dari instance session. Method tersebut mengembalikan dua nilai, yaitu data yang ada dan sebuah <code>boolean</code> yang menunjukkan apakah key yang diberikan ada di dalam session tersebut.</p>
+<pre><code class="language-go">package something
+
+import &quot;its.ac.id/base-go/pkg/session&quot;
+
+func Handler(ctx *gin.Context) {
+    // Mendapatkan instance dari session saat ini
+    sess := session.Default(ctx)
+
+    // Mendapatkan data dari session dengan key `user`
+    user, exists := sess.Get(&quot;user&quot;)
+}
+</code></pre>
+<h3 id="menyimpan-data">Menyimpan Data</h3>
+<p>Untuk menyimpan data ke session, Anda dapat menggunakan method <code>Set()</code> pada instance session dengan memberikan argumen yaitu key dan value.</p>
+<pre><code class="language-go">package something
+
+import &quot;its.ac.id/base-go/pkg/session&quot;
+
+func Handler(ctx *gin.Context) {
+    // Mendapatkan instance dari session saat ini
+    sess := session.Default(ctx)
+
+    // Menyimpan ke session
+    sess.Set(&quot;user.name&quot;, &quot;DPTSI ITS&quot;)
+    sess.Set(&quot;user.id&quot;, 11)
+
+    // Setiap melakukan perubahan, wajib memanggil method `Save()` setidaknya sekali.
+    // Umumnya dipanggil sekali setelah semua action yang mengubah session telah dipanggil.
+    if err := sess.Save(); err != nil {
+        ctx.JSON(http.StatusInternalServerError, gin.H{
+            &quot;code&quot;:    http.StatusInternalServerError,
+            &quot;message&quot;: &quot;unable_to_save_session&quot;,
+            &quot;data&quot;:    nil,
+        })
+        return
+    }
+}
+</code></pre>
+<h3 id="menghapus-data">Menghapus Data</h3>
+<p>Method <code>Delete()</code> dapat digunakan untuk menghapus data dengan key tertentu dari session.</p>
+<pre><code class="language-go">package something
+
+import &quot;its.ac.id/base-go/pkg/session&quot;
+
+func Handler(ctx *gin.Context) {
+    // Mendapatkan instance dari session saat ini
+    sess := session.Default(ctx)
+
+    // Menghapus dari session
+    sess.Delete(&quot;user.name&quot;)
+    sess.Delete(&quot;user.id&quot;)
+
+    // Setiap melakukan perubahan, wajib memanggil method `Save()` setidaknya sekali.
+    // Umumnya dipanggil sekali setelah semua action yang mengubah session telah dipanggil.
+    if err := sess.Save(); err != nil {
+        ctx.JSON(http.StatusInternalServerError, gin.H{
+            &quot;code&quot;:    http.StatusInternalServerError,
+            &quot;message&quot;: &quot;unable_to_save_session&quot;,
+            &quot;data&quot;:    nil,
+        })
+        return
+    }
+}
+</code></pre>
+<h3 id="regenerate-session-id">Regenerate Session ID</h3>
+<p>Proses ini dilakukan untuk menghindari eksploitasi dengan <a href="https://owasp.org/www-community/attacks/Session_fixation">Session fixation</a> pada aplikasi. Pada umumnya, hal ini dilakukan ketika ada perubahan privilege dari user, contohnya adalah ketika user berhasil login atau mengganti role.</p>
+<pre><code class="language-go">package something
+
+import &quot;its.ac.id/base-go/pkg/session&quot;
+
+func Handler(ctx *gin.Context) {
+    // Mendapatkan instance dari session saat ini
+    sess := session.Default(ctx)
+
+    // Regenerate session ID
+    sess.Regenerate()
+
+    // Setiap melakukan perubahan, wajib memanggil method `Save()` setidaknya sekali.
+    // Umumnya dipanggil sekali setelah semua action yang mengubah session telah dipanggil.
+    if err := sess.Save(); err != nil {
+        ctx.JSON(http.StatusInternalServerError, gin.H{
+            &quot;code&quot;:    http.StatusInternalServerError,
+            &quot;message&quot;: &quot;unable_to_save_session&quot;,
+            &quot;data&quot;:    nil,
+        })
+        return
+    }
+
+    // Fungsi ini wajib dipanggil untuk mengganti session ID yang ada pada cookie dengan nilai baru yang digenerate
+    session.AddCookieToResponse(ctx, sess.Id())
+}
+</code></pre>
+<h2 id="menambahkan-custom-session-adapter">Menambahkan Custom Session Adapter</h2>
+<h3 id="mengimplementasikan-adapter">Mengimplementasikan Adapter</h3>
+<p>Jika adapter yang sudah disediakan tidak memenuhi kriteria Anda, maka Anda perlu mengimplementasikan adapter yang memenuhi kontrak sebagai berikut:</p>
+<pre><code class="language-go">type Storage interface {
+    // Membaca instance dari session data dari penyimpanan
+    Get(ctx *gin.Context, id string) (*Data, error)
+    // Menyimpan instance session data ke penyimpanan
+    Save(ctx *gin.Context, id string, data map[string]interface{}, expiredAt time.Time, csrfToken string) error
+    // Menghapus data terkait dengan ID tersebut dari penyimpanan
+    Delete(ctx *gin.Context, id string) error
+}
+</code></pre>
+<h3 id="mendaftarkan-adapter">Mendaftarkan Adapter</h3>
+<p>Anda dapat melakukan inject adapter tersebut pada fungsi <code>init()</code> di berkas <code>bootstrap/web/web.go</code>.</p>
+<pre><code class="language-go">func init() {
+    do.Provide[session.Storage](e.Msg, func(i *do.Injector) (session.Storage, error) {
+        // Return implementasi dari adapter
+    })
+}
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.726fbb30.min.js"></script>
+      
+    
+  </body>
+</html>

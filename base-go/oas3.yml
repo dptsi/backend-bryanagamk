@@ -1,0 +1,197 @@
+openapi: 3.1.0
+info:
+  version: 0.1.0
+  title: Base Project
+  description: Dokumentasi untuk API Base Project
+
+paths:
+  /csrf-cookie:
+    get:
+      summary: Rute dummy untuk set CSRF-TOKEN cookie
+      tags:
+        - CSRF Protection
+      responses:
+        '200':
+          description: Cookie berhasil diset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    minimum: 200
+                    maximum: 200
+                    example: 200
+                    type: integer
+                  message:
+                    example: success
+                    type: string
+                  data:
+                    type: string
+                    nullable: true
+                    example: null
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: CSRF-TOKEN=abcde12345; Path=/
+
+  /auth/login:
+    post:
+      summary: Rute untuk mendapatkan link login melalui OpenID Connect
+      tags:
+        - Authentication & Authorization
+      security:
+        - csrfToken: []
+      responses:
+        '200':
+          description: Link login berhasil didapatkan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    minimum: 200
+                    maximum: 200
+                    example: 200
+                    type: integer
+                  message:
+                    example: login_url
+                    type: string
+                  data:
+                    type: string
+                    description: Link untuk login ke provider OpenID Connect
+                    example: https://dev-my.its.ac.id/authorize?client_id=062DBF94-A085-49CA-916E-1A55CFE39AEC&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fauth%2Fcallback&response_type=code&scope=openid+profile&state=f37fecbc-30ff-488e-859e-0ec42596d2f3
+
+      '500':
+        description: Terjadi kesalahan saat menghubungi provider OpenID Connect
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  minimum: 500
+                  maximum: 500
+                  example: 500
+                  type: integer
+                message:
+                  example: login_failed
+                  type: string
+                data:
+                  type: string
+                  nullable: true
+                  example: null
+
+  /auth/logout:
+    delete:
+      summary: Rute untuk logout
+      tags:
+        - Authentication & Authorization
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Logout berhasil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    minimum: 200
+                    maximum: 200
+                    example: 200
+                    type: integer
+                  message:
+                    example: logout_success
+                    type: string
+                  data:
+                    type: string
+                    description: Link untuk logout dari provider OpenID Connect
+                    example: https://dev-my.its.ac.id/signout?id_token_hint=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Img4MUc5bFlxcUlhMlJNTEZwbzhWbVNFOVB0LVAxTUNxWVVUajg5VFdpM1EifQ.eyJpc3MiOiJodHRwczpcL1wvZGV2LW15Lml0cy5hYy5pZCIsInN1YiI6IkY1NTRCQUQ2LTVBNjktNDJDOC1BODk0LTM3NENEMTI3MDlFRSIsImF1ZCI6IjA2MkRCRjk0LUEwODUtNDlDQS05MTZFLTFBNTVDRkUzOUFFQyIsImlhdCI6MTY5NTk1MzY4MywiZXhwIjoxNjk1OTg5NjgzLCJhdXRoX3RpbWUiOjE2OTU5NTM2ODN9.WzQmYQzUbcoESiJ804CQ_zn1X1wOVTVj14igHGfb7Zf7jGrpWzxqcDx37GboUswOs2iOmpxafLTyXN1sA-5npikbkQrI05KY4KbXFyRjCR4OW1gZWt6EQX7zcv71G_6sS885Iu-iGd_ybU19C19CBDjoMCWAmXtWT_we_CFhaY0JmUP7CRtROXIv1fZmph2mFHbkoX0A7vjgOfCO33mDQ44rz56FntOn_z9jDNJ1mZJV6zvoE0PTMIGP0aYCtMJ-zbMesTNzb6lsM7DX968FU2z-JRRhVw44u6aZULcDjaGD1etlWryqBs1x0OQVTf2uPr_EepAnavLSYV3pPGJ-PA&post_logout_redirect_uri=https%3A%2F%2Fdev-portal.its.ac.id
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+
+  /auth/user:
+    get:
+      summary: Rute untuk mendapatkan data user yang sedang login
+      tags:
+        - Authentication & Authorization
+      security:
+        - sessionCookie: []
+      responses:
+        '200':
+          description: Data user berhasil didapatkan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    minimum: 200
+                    maximum: 200
+                    example: 200
+                    type: integer
+                  message:
+                    example: user
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: c24b7c2c-5793-44e4-8acb-cee3d6e2ff12
+                      active_role:
+                        type: string
+                        nullable: true
+                        example: mahasiswa
+                      roles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: mahasiswa
+                            permissions:
+                              type: array
+                              items:
+                                type: string
+                            is_default:
+                              type: boolean
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+
+components:
+  responses:
+    401Unauthorized:
+      description: User belum login
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                minimum: 401
+                maximum: 401
+                example: 401
+                type: integer
+              message:
+                example: unauthorized
+                type: string
+              data:
+                type: string
+                nullable: true
+                example: null
+
+  securitySchemes:
+    sessionCookie: # arbitrary name for the security scheme; will be used in the "security" key later
+      type: apiKey
+      in: cookie
+      name: dptsi_base_go_session # cookie name
+    csrfToken:
+      type: apiKey
+      in: header
+      name: X-CSRF-TOKEN
